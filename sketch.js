@@ -86,7 +86,7 @@ function draw() {
     for (let i = 0; i < 8; i++) {
         connect(0, i, i + 8, projected3d);
     }
-    
+    angle += 0.02;
 }
 
 //This function draws a line connecting 2 vertices
