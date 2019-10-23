@@ -42,7 +42,30 @@ function draw() {
             [0, 0, cos(angle), -sin(angle)],
             [0, 0, sin(angle), cos(angle)]
         ];
-        
+        //rotated arount each vertex
+        let rotated = matmul(rotationXY, v);
+        rotated = matmul(rotationZW, rotated);
+
+        let distance = 2;
+        let w = 1 / (distance - rotated.w);
+
+        // create projection matrix with 3 rows and 4 columns
+        const projection = [
+            [w, 0, 0, 0],
+            [0, w, 0, 0],
+            [0, 0, w, 0],
+        ];
+
+        //the projected point
+        let projected = matmul(projection, rotated);
+        projected.mult(width / 8);
+        projected3d[i] = projected;
+
+        stroke(255, 200);
+        strokeWeight(32);
+        noFill();
+
+        point(projected.x, projected.y, projected.z);
     }
 
     // Connecting vertices to form edges of the inner cube
