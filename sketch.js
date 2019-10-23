@@ -22,8 +22,29 @@ function setup() {
 
 function draw() {
     background(0);
+    rotateX(-PI / 2);
     //array of projected points
     let projected3d = [];
+
+    for (let i = 0; i < points.length; i++) {
+        const v = points[i];
+        //XY rotation matrix
+        const rotationXY = [
+            [cos(angle), -sin(angle), 0, 0],    //x
+            [sin(angle), cos(angle), 0, 0],     //y
+            [0, 0, 1, 0],                       //z
+            [0, 0, 0, 1],                       //w
+        ];
+        // ZW rotationMatrix
+        const rotationZW = [
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, cos(angle), -sin(angle)],
+            [0, 0, sin(angle), cos(angle)]
+        ];
+        
+    }
+
     // Connecting vertices to form edges of the inner cube
     for (let i = 0; i < 4; i++) {
         connect(0, i, (i + 1) % 4, projected3d);
@@ -42,6 +63,7 @@ function draw() {
     for (let i = 0; i < 8; i++) {
         connect(0, i, i + 8, projected3d);
     }
+    
 }
 
 //This function draws a line connecting 2 vertices
