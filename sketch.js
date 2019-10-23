@@ -22,4 +22,33 @@ function setup() {
 
 function draw() {
     background(0);
+    //array of projected points
+    let projected3d = [];
+    // Connecting vertices to form edges of the inner cube
+    for (let i = 0; i < 4; i++) {
+        connect(0, i, (i + 1) % 4, projected3d);
+        connect(0, i + 4, ((i + 1) % 4) + 4, projected3d);
+        connect(0, i, i + 4, projected3d);
+    }
+
+    // Connecting vertices to form edges of the outer cube
+    for (let i = 0; i < 4; i++) {
+        connect(8, i, (i + 1) % 4, projected3d);
+        connect(8, i + 4, ((i + 1) % 4) + 4, projected3d);
+        connect(8, i, i + 4, projected3d);
+    }
+
+    // Drawing the edges connecting the inner and outer cubes
+    for (let i = 0; i < 8; i++) {
+        connect(0, i, i + 8, projected3d);
+    }
+}
+
+//This function draws a line connecting 2 vertices
+function connect(offset, i, j, points) {
+    strokeWeight(4);
+    stroke(255);
+    const a = points[i + offset];
+    const b = points[j + offset];
+    line(a.x, a.y, a.z, b.x, b.y, b.z);
 }
